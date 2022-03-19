@@ -8,15 +8,14 @@ def print_matrix(matrix: List[List[int]]):
 #for each point in the matrix, check the neighbours on the top, down, left and right
 #mark with -1 when a point with water is visited
 #sum the result of each travel
-def depth_first_search(matrix: List[List[int]], row, col, size) -> List[int]:
+def depth_first_search(matrix: List[List[int]], row, col) -> List[int]:
     if row >= 0 and row < len(matrix) and col >= 0 and col < len(matrix[0]) and matrix[row][col] == 1:
         matrix[row][col] = -1
-        size += 1
-        right = depth_first_search(matrix, row, col + 1, 0)
-        down = depth_first_search(matrix, row + 1, col, 0)
-        left = depth_first_search(matrix, row, col - 1, 0)
-        up = depth_first_search(matrix, row - 1, col, 0)
-        return right + down + left + up + size
+        right = depth_first_search(matrix, row, col + 1)
+        down = depth_first_search(matrix, row + 1, col)
+        left = depth_first_search(matrix, row, col - 1)
+        up = depth_first_search(matrix, row - 1, col)
+        return right + down + left + up + 1
     return 0 
 
 #a lake is a large area of water, surrounded by land.
@@ -28,8 +27,7 @@ def lake_areas(matrix: List[List[int]]) -> List[int]:
     for row in range(len(matrix)):
         for col in range(len(matrix[0])):
             if matrix[row][col] == 1:
-                size = 0
-                sizes.append(depth_first_search(matrix, row, col, size))
+                sizes.append(depth_first_search(matrix, row, col))
     return sizes
 
 matrix = [
