@@ -31,6 +31,6 @@ def main():
             'total': amount * item['price']
         }
         producer.send(topic_name, json.dumps(sale).encode('utf-8'))
-        time.sleep(2/100)
+        time.sleep(2/10)
 
 main()
