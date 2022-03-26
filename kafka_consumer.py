@@ -7,7 +7,7 @@ import postgresql
 
 #Kafka consumer from topic sales
 def kafka_consumer():
-    consumer = KafkaConsumer('sales',
+    consumer = KafkaConsumer('sales_v2',
                              bootstrap_servers=['localhost:9092'],
                              auto_offset_reset='earliest',
                              enable_auto_commit=True,
@@ -15,12 +15,16 @@ def kafka_consumer():
                              value_deserializer=lambda x: json.loads(x.decode('utf-8')))
     
     sales = []
+    start_time = time.time()
     #get at least 10 sales from topic sales and save on postgress
     for message in consumer:
         sale = message.value
         sales.append(sale)
         if len(sales) == 10:
+            delta_time = time.time() - start_time
             postgress_save(sales)
+            print("{} sales added to postgress in {} seconds!".format(len(sales), delta_time))
+            start_time = time.time()
             sales = []
 
 #Save sale on postgress

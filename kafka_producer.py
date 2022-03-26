@@ -12,11 +12,11 @@ def kafka_producer(sale):
     producer.send(topic_name, json.dumps(sale).encode('utf-8'))
 
 
-list_of_itens =[{'name': 'item1', 'price': 10},{'name': 'item2', 'price': 20},{'name': 'item3', 'price': 30}, {'name': 'item4', 'price': 40}]
+list_of_itens =[{'name': 'Book', 'price': 10},{'name': 'Video Game', 'price': 20},{'name': 'Computer', 'price': 30}, {'name': 'T-Shirt', 'price': 40}]
 #produce a sale every 2 seconds and send it to topic sales 
 #total produced should be 10
 def main():
-    topic_name = 'sales'
+    topic_name = 'sales_v2'
     producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
     i = 0
     while i < 1000000:
@@ -31,6 +31,6 @@ def main():
             'total': amount * item['price']
         }
         producer.send(topic_name, json.dumps(sale).encode('utf-8'))
-        time.sleep(2/10)
+        time.sleep(5/10)
 
 main()
