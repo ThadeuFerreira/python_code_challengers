@@ -57,3 +57,7 @@ print(trie.find('apples'))
 print(trie.find('app'))
 print(trie.auto_complete('appl'))
 print(trie.auto_complete('a'))
+from collections import Counter
+l = ['rose','tulips','sunflowers','tulips','rose']
+my_count = Counter(l)
+print(my_count)
